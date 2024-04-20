@@ -11,6 +11,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# you cant move in the opposite direction immediately (when ur moving down, you cant just immediately go up)
 	if Input.is_action_pressed("up") and prev_direction != Vector2(0, 1):
 		prev_direction = direction
 		direction = Vector2(0, -1)
