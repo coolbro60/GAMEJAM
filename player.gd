@@ -3,33 +3,27 @@ extends CharacterBody2D
 var direction = Vector2(0,1)
 var prev_direction = Vector2(0,0)
 var can_move = true; 
-@export var speed = 3000
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
+@export var speed = 32
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	# you cant move in the opposite direction immediately (when ur moving down, you cant just immediately go up)
-	if Input.is_action_pressed("up") and prev_direction != Vector2(0, 1):
-		prev_direction = direction
-		direction = Vector2(0, -1)
-	if Input.is_action_pressed("down") and prev_direction != Vector2(0, -1):
-		prev_direction = direction
-		direction = Vector2(0, 1)
+func _process(_delta):
+
 	if Input.is_action_pressed("left") and prev_direction != Vector2(1, 0):
 		prev_direction = direction
-		direction = Vector2(-1, 0)
+		direction = Vector2(-1, 1)
 	if Input.is_action_pressed("right") and prev_direction != Vector2(-1, 0):
 		prev_direction = direction
-		direction = Vector2(1, 0)
+		direction = Vector2(1, 1)
+	if Input.is_action_pressed("down"):
+		prev_direction = direction
+		direction = Vector2(0, 1)
 	
 	if can_move: 
-		position += direction * speed * delta
+		position += direction * speed
+		print(position)
 		can_move = false
 	move_and_slide()
-		
+	
+	
 
 func _on_timer_timeout():
 	can_move = true
